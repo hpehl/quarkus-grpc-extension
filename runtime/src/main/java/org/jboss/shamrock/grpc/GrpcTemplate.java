@@ -15,29 +15,39 @@
  */
 package org.jboss.shamrock.grpc;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.jboss.shamrock.runtime.annotations.Template;
+import io.grpc.BindableService;
+import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import org.jboss.shamrock.runtime.RuntimeValue;
+import org.jboss.shamrock.runtime.ShutdownContext;
+import org.jboss.shamrock.runtime.annotations.Template;
 
 /**
+ * Starts a gRPC server and registers gRPC services annotated with {@code @GrpcService}.
+ *
  * @author Harald Pehl
  */
 @Template
 public class GrpcTemplate {
 
-    private static final Logger log = Logger.getLogger(GrpcTemplate.class.getName());
+    private static final Logger log = Logger.getLogger("org.jboss.shamrock.grpc");
+    private static ServerBuilder<?> serverBuilder;
 
-    public void startServer() throws IOException {
-        ServerBuilder
-                .forPort(8888)
-                .build()
-                .start();
-        log.info("gRPC server started");
+    public void prepareServer(int port) {
+        serverBuilder = ServerBuilder.forPort(port);
     }
 
-    public void registerServices() {
-        log.info("gRPC services registered");
+    public void registerService(RuntimeValue<BindableService> serviceValue) {
+        BindableService service = serviceValue.getValue();
+        serverBuilder.addService(service);
+        log.info("Registered gRPC service " + service.bindService().getServiceDescriptor().getName());
+    }
+
+    public void startServer(ShutdownContext shutdown) throws Exception {
+        Server server = serverBuilder.build().start();
+        log.info("Started gRPC server");
+        shutdown.addShutdownTask(server::shutdown);
     }
 }

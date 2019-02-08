@@ -29,6 +29,8 @@
 
     <properties>
         <grpc.version>1.18.0</grpc.version>
+        <protobuf.version>3.5.1</protobuf.version>
+        <protoc.version>3.5.1-1</protoc.version>
     </properties>
 
     <dependencies>
@@ -52,17 +54,16 @@
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty</artifactId>
             <version>${grpc.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.errorprone</groupId>
-                    <artifactId>error_prone_annotations</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.jboss.shamrock</groupId>
-            <artifactId>shamrock-netty-runtime</artifactId>
-            <version>${shamrock.version}</version>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <version>${grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+            <version>${grpc.version}</version>
         </dependency>
     </dependencies>
 
