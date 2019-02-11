@@ -22,12 +22,15 @@ import java.util.logging.Logger;
 import io.grpc.BindableService;
 import org.jboss.jandex.AnnotationInstance;
 import org.jboss.jandex.DotName;
+import org.jboss.shamrock.deployment.annotations.BuildProducer;
 import org.jboss.shamrock.deployment.annotations.BuildStep;
 import org.jboss.shamrock.deployment.annotations.Record;
 import org.jboss.shamrock.deployment.builditem.CombinedIndexBuildItem;
 import org.jboss.shamrock.deployment.builditem.FeatureBuildItem;
 import org.jboss.shamrock.deployment.builditem.ServiceStartBuildItem;
 import org.jboss.shamrock.deployment.builditem.ShutdownContextBuildItem;
+import org.jboss.shamrock.deployment.builditem.substrate.ReflectiveClassBuildItem;
+import org.jboss.shamrock.deployment.builditem.substrate.SubstrateConfigBuildItem;
 import org.jboss.shamrock.deployment.recording.RecorderContext;
 import org.jboss.shamrock.runtime.RuntimeValue;
 import org.jboss.shamrock.runtime.annotations.ConfigItem;
@@ -62,9 +65,26 @@ public class GrpcBuildStep {
     }
 
     @BuildStep
+    public SubstrateConfigBuildItem setupNetty(BuildProducer<ReflectiveClassBuildItem> reflectiveClass) {
+        reflectiveClass.produce(new ReflectiveClassBuildItem(false, false,
+                "io.netty.channel.socket.nio.NioServerSocketChannel"));
+
+        return SubstrateConfigBuildItem.builder()
+                .addNativeImageSystemProperty("io.netty.noUnsafe", "true")
+                .addNativeImageSystemProperty("io.netty.leakDetection.level", "DISABLED")
+                .addRuntimeReinitializedClass("io.netty.handler.codec.http2.Http2CodecUtil")
+                .addRuntimeInitializedClass("io.netty.handler.codec.http.HttpObjectEncoder")
+                .addRuntimeInitializedClass("io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder")
+                .addRuntimeInitializedClass("io.netty.handler.codec.http2.DefaultHttp2FrameWriter")
+                .addRuntimeInitializedClass("io.netty.handler.ssl.JdkNpnApplicationProtocolNegotiator")
+                .addRuntimeInitializedClass("io.netty.handler.ssl.ReferenceCountedOpenSslEngine")
+                .build();
+    }
+
+    @BuildStep
     @Record(RUNTIME_INIT)
-    public ServiceStartBuildItem registerServices(CombinedIndexBuildItem indexBuildItem, RecorderContext context,
-            ShutdownContextBuildItem shutdown, GrpcTemplate template) throws Exception {
+    public ServiceStartBuildItem startServer(CombinedIndexBuildItem indexBuildItem,
+            ShutdownContextBuildItem shutdown, RecorderContext context, GrpcTemplate template) throws Exception {
         Collection<AnnotationInstance> serviceAnnotations = indexBuildItem.getIndex().getAnnotations(GRPC_SERVICE);
         for (AnnotationInstance serviceAnnotation : serviceAnnotations) {
             String className = serviceAnnotation.target().asClass().toString();
