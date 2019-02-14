@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import io.grpc.BindableService;
+import io.grpc.ServerInterceptor;
 import org.jboss.jandex.AnnotationInstance;
 import org.jboss.jandex.DotName;
 import org.jboss.shamrock.deployment.annotations.BuildProducer;
@@ -33,8 +34,6 @@ import org.jboss.shamrock.deployment.builditem.substrate.ReflectiveClassBuildIte
 import org.jboss.shamrock.deployment.builditem.substrate.SubstrateConfigBuildItem;
 import org.jboss.shamrock.deployment.recording.RecorderContext;
 import org.jboss.shamrock.runtime.RuntimeValue;
-import org.jboss.shamrock.runtime.annotations.ConfigItem;
-import org.jboss.shamrock.runtime.annotations.ConfigRoot;
 
 import static org.jboss.shamrock.deployment.annotations.ExecutionTime.RUNTIME_INIT;
 import static org.jboss.shamrock.deployment.annotations.ExecutionTime.STATIC_INIT;
@@ -44,16 +43,8 @@ import static org.jboss.shamrock.deployment.annotations.ExecutionTime.STATIC_INI
  */
 public class GrpcBuildStep {
 
-    @ConfigRoot
-    static final class GrpcConfig {
-
-        /** The port of the gRPC server. */
-        @ConfigItem(defaultValue = "8888")
-        int port;
-    }
-
-
     private static final DotName GRPC_SERVICE = DotName.createSimple(GrpcService.class.getName());
+    private static final DotName GRPC_INTERCEPTOR = DotName.createSimple(GrpcInterceptor.class.getName());
     private static final Logger log = Logger.getLogger("org.jboss.shamrock.grpc");
 
     GrpcConfig config;
@@ -61,7 +52,7 @@ public class GrpcBuildStep {
     @BuildStep
     @Record(STATIC_INIT)
     public void prepareServer(GrpcTemplate template) {
-        template.prepareServer(config.port);
+        template.prepareServer(config);
     }
 
     @BuildStep
@@ -86,6 +77,7 @@ public class GrpcBuildStep {
     @Record(RUNTIME_INIT)
     public ServiceStartBuildItem startServer(CombinedIndexBuildItem indexBuildItem,
             ShutdownContextBuildItem shutdown, RecorderContext context, GrpcTemplate template) throws Exception {
+        // gRPC services
         Collection<AnnotationInstance> serviceAnnotations = indexBuildItem.getIndex().getAnnotations(GRPC_SERVICE);
         for (AnnotationInstance serviceAnnotation : serviceAnnotations) {
             String className = serviceAnnotation.target().asClass().toString();
@@ -93,6 +85,17 @@ public class GrpcBuildStep {
             RuntimeValue<BindableService> serviceInstance = context.newInstance(className);
             template.registerService(serviceInstance);
         }
+
+        // gRPC interceptors
+        Collection<AnnotationInstance> interceptorAnnotations = indexBuildItem.getIndex()
+                .getAnnotations(GRPC_INTERCEPTOR);
+        for (AnnotationInstance interceptorAnnotation : interceptorAnnotations) {
+            String className = interceptorAnnotation.target().asClass().toString();
+            log.log(Level.FINE, "Found gRPC interceptor " + className);
+            RuntimeValue<ServerInterceptor> interceptorInstance = context.newInstance(className);
+            template.registerInterceptor(interceptorInstance);
+        }
+
         template.startServer(shutdown);
         return new ServiceStartBuildItem("gRPC");
     }

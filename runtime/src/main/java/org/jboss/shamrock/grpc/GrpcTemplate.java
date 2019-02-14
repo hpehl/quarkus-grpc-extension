@@ -15,17 +15,19 @@
  */
 package org.jboss.shamrock.grpc;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.ServerInterceptor;
 import org.jboss.shamrock.runtime.RuntimeValue;
 import org.jboss.shamrock.runtime.ShutdownContext;
 import org.jboss.shamrock.runtime.annotations.Template;
 
 /**
- * Starts a gRPC server and registers gRPC services annotated with {@code @GrpcService}.
+ * Setup and start a gRPC server.
  *
  * @author Harald Pehl
  */
@@ -35,8 +37,11 @@ public class GrpcTemplate {
     private static final Logger log = Logger.getLogger("org.jboss.shamrock.grpc");
     private static ServerBuilder<?> serverBuilder;
 
-    public void prepareServer(int port) {
-        serverBuilder = ServerBuilder.forPort(port);
+    public void prepareServer(GrpcConfig config) {
+        serverBuilder = ServerBuilder.forPort(config.port)
+                .handshakeTimeout(config.handshakeTimeout, TimeUnit.MILLISECONDS)
+                .maxInboundMessageSize(config.maxInboundMessageSize)
+                .maxInboundMetadataSize(config.maxInboundMetadataSize);
     }
 
     public void registerService(RuntimeValue<BindableService> serviceValue) {
@@ -45,9 +50,15 @@ public class GrpcTemplate {
         log.info("Registered gRPC service " + service.bindService().getServiceDescriptor().getName());
     }
 
+    public void registerInterceptor(RuntimeValue<ServerInterceptor> interceptorValue) {
+        ServerInterceptor interceptor = interceptorValue.getValue();
+        serverBuilder.intercept(interceptor);
+        log.info("Registered gRPC interceptor");
+    }
+
     public void startServer(ShutdownContext shutdown) throws Exception {
         Server server = serverBuilder.build().start();
-        log.info("Started gRPC server");
+        log.info("gRPC server runnning on port " + server.getPort());
         shutdown.addShutdownTask(server::shutdown);
     }
 }
