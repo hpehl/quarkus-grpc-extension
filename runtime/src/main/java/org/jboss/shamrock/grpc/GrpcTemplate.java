@@ -22,12 +22,12 @@ import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.ServerInterceptor;
-import org.jboss.shamrock.runtime.RuntimeValue;
+import org.jboss.shamrock.arc.runtime.BeanContainer;
 import org.jboss.shamrock.runtime.ShutdownContext;
 import org.jboss.shamrock.runtime.annotations.Template;
 
 /**
- * Setup and start a gRPC server.
+ * Setup a gRPC server, register services and interceptors and finally start the server.
  *
  * @author Harald Pehl
  */
@@ -44,21 +44,25 @@ public class GrpcTemplate {
                 .maxInboundMetadataSize(config.maxInboundMetadataSize);
     }
 
-    public void registerService(RuntimeValue<BindableService> serviceValue) {
-        BindableService service = serviceValue.getValue();
-        serverBuilder.addService(service);
-        log.info("Registered gRPC service " + service.bindService().getServiceDescriptor().getName());
+    public void registerServices(BeanContainer beanContainer) {
+        GrpcProvider provider = beanContainer.instance(GrpcProvider.class);
+        for (BindableService service : provider.getServices()) {
+            serverBuilder.addService(service);
+            log.info("Registered gRPC service " + service.getClass().getName());
+        }
     }
 
-    public void registerInterceptor(RuntimeValue<ServerInterceptor> interceptorValue) {
-        ServerInterceptor interceptor = interceptorValue.getValue();
-        serverBuilder.intercept(interceptor);
-        log.info("Registered gRPC interceptor");
+    public void registerInterceptors(BeanContainer beanContainer) {
+        GrpcProvider provider = beanContainer.instance(GrpcProvider.class);
+        for (ServerInterceptor interceptor : provider.getInterceptors()) {
+            serverBuilder.intercept(interceptor);
+            log.info("Registered gRPC interceptor " + interceptor.getClass().getName());
+        }
     }
 
     public void startServer(ShutdownContext shutdown) throws Exception {
         Server server = serverBuilder.build().start();
-        log.info("gRPC server runnning on port " + server.getPort());
+        log.info("gRPC server listening on port " + server.getPort());
         shutdown.addShutdownTask(server::shutdown);
     }
 }

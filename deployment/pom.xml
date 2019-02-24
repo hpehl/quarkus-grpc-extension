@@ -30,7 +30,12 @@
     <dependencies>
         <dependency>
             <groupId>org.jboss.shamrock</groupId>
-            <artifactId>shamrock-core-deployment</artifactId>
+            <artifactId>shamrock-builder</artifactId>
+            <version>${shamrock.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.shamrock</groupId>
+            <artifactId>shamrock-arc-deployment</artifactId>
             <version>${shamrock.version}</version>
         </dependency>
         <dependency>
