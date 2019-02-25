@@ -15,15 +15,13 @@ import io.grpc.ServerInterceptor;
 @ApplicationScoped
 public class GrpcProvider {
 
-    private final Instance<BindableService> services;
-    private final Instance<ServerInterceptor> interceptors;
+    @Inject
+    @GrpcService
+    Instance<BindableService> services;
 
     @Inject
-    public GrpcProvider(@GrpcService Instance<BindableService> services,
-            @GrpcInterceptor Instance<ServerInterceptor> interceptors) {
-        this.services = services;
-        this.interceptors = interceptors;
-    }
+    @GrpcInterceptor
+    Instance<ServerInterceptor> interceptors;
 
     public Instance<BindableService> getServices() {
         return services;
