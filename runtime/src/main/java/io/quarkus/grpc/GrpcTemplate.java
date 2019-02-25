@@ -34,7 +34,7 @@ import io.quarkus.runtime.annotations.Template;
 @Template
 public class GrpcTemplate {
 
-    private static final Logger log = Logger.getLogger("org.jboss.shamrock.grpc");
+    private static final Logger log = Logger.getLogger("io.quarkus.grpc");
     private static ServerBuilder<?> serverBuilder;
 
     public void prepareServer(GrpcConfig config) {
