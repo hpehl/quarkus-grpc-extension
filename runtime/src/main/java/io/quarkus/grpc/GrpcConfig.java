@@ -1,9 +1,9 @@
-package org.jboss.shamrock.grpc;
+package io.quarkus.grpc;
 
-import org.jboss.shamrock.runtime.annotations.ConfigItem;
-import org.jboss.shamrock.runtime.annotations.ConfigRoot;
+import static io.quarkus.runtime.annotations.ConfigPhase.BUILD_AND_RUN_TIME_FIXED;
 
-import static org.jboss.shamrock.runtime.annotations.ConfigPhase.BUILD_AND_RUN_TIME_FIXED;
+import io.quarkus.runtime.annotations.ConfigItem;
+import io.quarkus.runtime.annotations.ConfigRoot;
 
 @ConfigRoot(phase = BUILD_AND_RUN_TIME_FIXED)
 public final class GrpcConfig {

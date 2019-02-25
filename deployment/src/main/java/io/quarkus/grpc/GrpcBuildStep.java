@@ -1,23 +1,24 @@
-package org.jboss.shamrock.grpc;
+package io.quarkus.grpc;
+
+import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
+import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
 
 import javax.enterprise.context.Dependent;
 
 import org.jboss.jandex.DotName;
-import org.jboss.shamrock.arc.deployment.AdditionalBeanBuildItem;
-import org.jboss.shamrock.arc.deployment.BeanContainerBuildItem;
-import org.jboss.shamrock.arc.deployment.BeanDefiningAnnotationBuildItem;
-import org.jboss.shamrock.deployment.annotations.BuildProducer;
-import org.jboss.shamrock.deployment.annotations.BuildStep;
-import org.jboss.shamrock.deployment.annotations.Record;
-import org.jboss.shamrock.deployment.builditem.ExtensionSslNativeSupportBuildItem;
-import org.jboss.shamrock.deployment.builditem.FeatureBuildItem;
-import org.jboss.shamrock.deployment.builditem.ServiceStartBuildItem;
-import org.jboss.shamrock.deployment.builditem.ShutdownContextBuildItem;
-import org.jboss.shamrock.deployment.builditem.substrate.ReflectiveClassBuildItem;
-import org.jboss.shamrock.deployment.builditem.substrate.SubstrateConfigBuildItem;
 
-import static org.jboss.shamrock.deployment.annotations.ExecutionTime.RUNTIME_INIT;
-import static org.jboss.shamrock.deployment.annotations.ExecutionTime.STATIC_INIT;
+import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
+import io.quarkus.arc.deployment.BeanContainerBuildItem;
+import io.quarkus.arc.deployment.BeanDefiningAnnotationBuildItem;
+import io.quarkus.deployment.annotations.BuildProducer;
+import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.Record;
+import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
+import io.quarkus.deployment.builditem.FeatureBuildItem;
+import io.quarkus.deployment.builditem.ServiceStartBuildItem;
+import io.quarkus.deployment.builditem.ShutdownContextBuildItem;
+import io.quarkus.deployment.builditem.substrate.ReflectiveClassBuildItem;
+import io.quarkus.deployment.builditem.substrate.SubstrateConfigBuildItem;
 
 public class GrpcBuildStep {
 
@@ -81,4 +82,3 @@ public class GrpcBuildStep {
         return new ServiceStartBuildItem("gRPC");
     }
 }
-

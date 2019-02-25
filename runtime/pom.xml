@@ -19,13 +19,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.jboss.shamrock</groupId>
-        <artifactId>shamrock-grpc</artifactId>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-grpc</artifactId>
         <version>1.0.0.Alpha1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shamrock-grpc-runtime</artifactId>
-    <name>Shamrock - gRPC - Runtime</name>
+    <artifactId>quarkus-grpc-runtime</artifactId>
+    <name>Quarkus - gRPC - Runtime</name>
 
     <properties>
         <graal-sdk.version>1.0.0-rc11</graal-sdk.version>
@@ -36,14 +36,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jboss.shamrock</groupId>
-            <artifactId>shamrock-arc-runtime</artifactId>
-            <version>${shamrock.version}</version>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-arc-runtime</artifactId>
+            <version>${quarkus.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.jboss.shamrock</groupId>
-            <artifactId>shamrock-netty-runtime</artifactId>
-            <version>${shamrock.version}</version>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-netty-runtime</artifactId>
+            <version>${quarkus.version}</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
@@ -106,9 +106,9 @@
                 <configuration>
                     <annotationProcessorPaths>
                         <path>
-                            <groupId>org.jboss.shamrock</groupId>
-                            <artifactId>shamrock-extension-processor</artifactId>
-                            <version>${shamrock.version}</version>
+                            <groupId>io.quarkus</groupId>
+                            <artifactId>quarkus-extension-processor</artifactId>
+                            <version>${quarkus.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

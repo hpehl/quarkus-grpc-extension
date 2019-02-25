@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.shamrock.grpc;
+package io.quarkus.grpc;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -22,9 +22,9 @@ import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.ServerInterceptor;
-import org.jboss.shamrock.arc.runtime.BeanContainer;
-import org.jboss.shamrock.runtime.ShutdownContext;
-import org.jboss.shamrock.runtime.annotations.Template;
+import io.quarkus.arc.runtime.BeanContainer;
+import io.quarkus.runtime.ShutdownContext;
+import io.quarkus.runtime.annotations.Template;
 
 /**
  * Setup a gRPC server, register services and interceptors and finally start the server.

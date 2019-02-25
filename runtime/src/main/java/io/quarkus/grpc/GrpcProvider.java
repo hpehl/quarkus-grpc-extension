@@ -1,4 +1,4 @@
-package org.jboss.shamrock.grpc;
+package io.quarkus.grpc;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
@@ -15,8 +15,15 @@ import io.grpc.ServerInterceptor;
 @ApplicationScoped
 public class GrpcProvider {
 
-    @Inject @GrpcService Instance<BindableService> services;
-    @Inject @GrpcInterceptor Instance<ServerInterceptor> interceptors;
+    private final Instance<BindableService> services;
+    private final Instance<ServerInterceptor> interceptors;
+
+    @Inject
+    public GrpcProvider(@GrpcService Instance<BindableService> services,
+            @GrpcInterceptor Instance<ServerInterceptor> interceptors) {
+        this.services = services;
+        this.interceptors = interceptors;
+    }
 
     public Instance<BindableService> getServices() {
         return services;

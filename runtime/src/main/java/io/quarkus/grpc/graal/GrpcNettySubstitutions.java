@@ -1,13 +1,12 @@
-package org.jboss.shamrock.grpc.graal;
-
+package io.quarkus.grpc.graal;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.oracle.svm.core.annotate.Substitute;
 import com.oracle.svm.core.annotate.TargetClass;
-import io.netty.channel.ChannelHandlerContext;
 
+import io.netty.channel.ChannelHandlerContext;
 
 @TargetClass(className = "io.grpc.netty.ProtocolNegotiators")
 final class Target_io_grpc_netty_ProtocolNegotiators {
@@ -22,7 +21,6 @@ final class Target_io_grpc_netty_ProtocolNegotiators {
     }
 }
 
-
 @TargetClass(className = "com.google.protobuf.UnsafeUtil")
 final class Target_com_google_protobuf_UnsafeUtil {
 
@@ -32,7 +30,6 @@ final class Target_com_google_protobuf_UnsafeUtil {
         return null;
     }
 }
-
 
 class GrpcNettySubstitutions {
 }
