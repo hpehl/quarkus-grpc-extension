@@ -13,26 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.quarkus.grpc;
+package io.quarkus.grpc.test;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+/** Registry for services to clean-up. */
+public interface CleanupRegistry<T> {
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+    /**
+     * Register item to clean-up at end of test.
+     *
+     * @param cleanupItem item to cleanup
+     * @param <R>         type of the item
+     *
+     * @return the registered item
+     */
+    <R extends T> R register(R cleanupItem);
 
-import javax.inject.Qualifier;
-
-/**
- * Annotation for gRPC services.
- *
- * @author Harald Pehl
- */
-@Qualifier
-@Retention(RUNTIME)
-@Target({ METHOD, FIELD, PARAMETER, TYPE })
-public @interface GrpcService {
+    /** Stops all registered services and removes them from the registry. */
+    void clear();
 }

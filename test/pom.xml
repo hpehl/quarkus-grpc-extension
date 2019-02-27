@@ -20,37 +20,28 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-build-parent</artifactId>
+        <artifactId>quarkus-grpc</artifactId>
         <version>1.0.0.Alpha1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quarkus-grpc</artifactId>
-    <name>Quarkus - gRPC</name>
-    <packaging>pom</packaging>
-    <version>1.0.0.Alpha1-SNAPSHOT</version>
+    <artifactId>quarkus-grpc-test</artifactId>
+    <name>Quarkus - gRPC - Test</name>
 
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <grpc.version>1.18.0</grpc.version>
-        <protobuf.version>3.5.1</protobuf.version>
-        <protoc.version>3.5.1-1</protoc.version>
-        <quarkus.version>1.0.0.Alpha1-SNAPSHOT</quarkus.version>
-    </properties>
-
-    <modules>
-        <module>deployment</module>
-        <module>test</module>
-        <module>runtime</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-core</artifactId>
+            <version>${grpc.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
+    </dependencies>
 </project>

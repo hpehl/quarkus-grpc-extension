@@ -13,26 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.quarkus.grpc;
+package io.quarkus.grpc.test;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.concurrent.TimeUnit;
 
-import javax.inject.Qualifier;
+/** Grace period for cleanup each single service. */
+@Target({ElementType.TYPE, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+public @interface CleanupTimeout {
 
-/**
- * Annotation for gRPC services.
- *
- * @author Harald Pehl
- */
-@Qualifier
-@Retention(RUNTIME)
-@Target({ METHOD, FIELD, PARAMETER, TYPE })
-public @interface GrpcService {
+    /**
+     * Amount of time units.
+     *
+     * @return time units
+     */
+    long value();
+
+    /**
+     * Time unit for timeout.
+     *
+     * @return time unit
+     */
+    TimeUnit unit();
 }

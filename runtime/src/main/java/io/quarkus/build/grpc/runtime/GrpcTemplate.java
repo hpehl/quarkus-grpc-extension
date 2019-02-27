@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.quarkus.grpc;
+package io.quarkus.build.grpc.runtime;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -23,6 +23,7 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.ServerInterceptor;
 import io.quarkus.arc.runtime.BeanContainer;
+import io.quarkus.grpc.GrpcProvider;
 import io.quarkus.runtime.ShutdownContext;
 import io.quarkus.runtime.annotations.Template;
 

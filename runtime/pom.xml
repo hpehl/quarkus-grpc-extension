@@ -29,9 +29,6 @@
 
     <properties>
         <graal-sdk.version>1.0.0-rc11</graal-sdk.version>
-        <grpc.version>1.18.0</grpc.version>
-        <protobuf.version>3.5.1</protobuf.version>
-        <protoc.version>3.5.1-1</protoc.version>
     </properties>
 
     <dependencies>

@@ -13,26 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.quarkus.grpc;
+package io.quarkus.grpc.test;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.util.concurrent.TimeUnit;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import io.grpc.ManagedChannel;
 
-import javax.inject.Qualifier;
+public class ManagedChannelCleanupRegistry extends ResourceCleanupRegistry<ManagedChannel> {
+    ManagedChannelCleanupRegistry(long timeout, TimeUnit timeoutUnit) {
+        super(timeout, timeoutUnit);
+    }
 
-/**
- * Annotation for gRPC services.
- *
- * @author Harald Pehl
- */
-@Qualifier
-@Retention(RUNTIME)
-@Target({ METHOD, FIELD, PARAMETER, TYPE })
-public @interface GrpcService {
+    @Override
+    protected Resource<ManagedChannel> wrap(ManagedChannel service) {
+        return new ManagedChannelResource(service);
+    }
 }

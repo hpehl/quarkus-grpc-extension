@@ -13,26 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.quarkus.grpc;
+package io.quarkus.grpc.test;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.util.concurrent.TimeUnit;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import io.grpc.Server;
 
-import javax.inject.Qualifier;
+class ServerResource extends Resource<Server> {
 
-/**
- * Annotation for gRPC services.
- *
- * @author Harald Pehl
- */
-@Qualifier
-@Retention(RUNTIME)
-@Target({ METHOD, FIELD, PARAMETER, TYPE })
-public @interface GrpcService {
+    ServerResource(Server delegate) {
+        super(delegate);
+    }
+
+    @Override
+    void shutdown() {
+        getDelegate().shutdown();
+    }
+
+    @Override
+    void shutdownNow() {
+        getDelegate().shutdownNow();
+    }
+
+    @Override
+    boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException {
+        return getDelegate().awaitTermination(timeout, unit);
+    }
 }
