@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 import java.util.concurrent.TimeUnit;
 
 /** Grace period for cleanup each single service. */
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited

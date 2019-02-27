@@ -16,7 +16,5 @@
 package io.quarkus.grpc.test;
 
 enum TerminationState {
-    SUCCESS,
-    FAILURE,
-    INTERRUPTED
+    SUCCESS, FAILURE, INTERRUPTED
 }

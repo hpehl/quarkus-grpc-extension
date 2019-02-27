@@ -38,7 +38,8 @@ public class GrpcTestExtension implements ParameterResolver, AfterEachCallback {
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
         Class<?> parameterType = parameterContext.getParameter().getType();
-        return ServerCleanupRegistry.class.isAssignableFrom(parameterType) || ManagedChannelCleanupRegistry.class.isAssignableFrom(parameterType);
+        return ServerCleanupRegistry.class.isAssignableFrom(parameterType)
+                || ManagedChannelCleanupRegistry.class.isAssignableFrom(parameterType);
     }
 
     @Override
@@ -59,24 +60,20 @@ public class GrpcTestExtension implements ParameterResolver, AfterEachCallback {
 
     private ServerCleanupRegistry getServerCleanupRegistry(ExtensionContext context) {
         return getStore(context).getOrComputeIfAbsent(
-            ServerCleanupRegistry.class,
-            cls -> new ServerCleanupRegistry(
-                findCleanupTimeout(context).map(CleanupTimeout::value).orElse(DEFAULT_TIMEOUT_SECONDS),
-                findCleanupTimeout(context).map(CleanupTimeout::unit).orElse(TimeUnit.SECONDS)
-            ),
-            ServerCleanupRegistry.class
-        );
+                ServerCleanupRegistry.class,
+                cls -> new ServerCleanupRegistry(
+                        findCleanupTimeout(context).map(CleanupTimeout::value).orElse(DEFAULT_TIMEOUT_SECONDS),
+                        findCleanupTimeout(context).map(CleanupTimeout::unit).orElse(TimeUnit.SECONDS)),
+                ServerCleanupRegistry.class);
     }
 
     private ManagedChannelCleanupRegistry getManagedChannelCleanupRegistry(ExtensionContext context) {
         return getStore(context).getOrComputeIfAbsent(
-            ManagedChannelCleanupRegistry.class,
-            cls -> new ManagedChannelCleanupRegistry(
-                findCleanupTimeout(context).map(CleanupTimeout::value).orElse(DEFAULT_TIMEOUT_SECONDS),
-                findCleanupTimeout(context).map(CleanupTimeout::unit).orElse(TimeUnit.SECONDS)
-            ),
-            ManagedChannelCleanupRegistry.class
-        );
+                ManagedChannelCleanupRegistry.class,
+                cls -> new ManagedChannelCleanupRegistry(
+                        findCleanupTimeout(context).map(CleanupTimeout::value).orElse(DEFAULT_TIMEOUT_SECONDS),
+                        findCleanupTimeout(context).map(CleanupTimeout::unit).orElse(TimeUnit.SECONDS)),
+                ManagedChannelCleanupRegistry.class);
     }
 
     private ExtensionContext.Store getStore(ExtensionContext context) {

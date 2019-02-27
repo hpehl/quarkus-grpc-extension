@@ -59,8 +59,8 @@ public abstract class ResourceCleanupRegistry<T> implements CleanupRegistry<T> {
 
     private Optional<Resource<T>> awaitTermination() {
         Optional<Resource<T>> firstFailed = servers.parallelStream()
-            .filter(s -> awaitTermination(s) != TerminationState.SUCCESS)
-            .findFirst();
+                .filter(s -> awaitTermination(s) != TerminationState.SUCCESS)
+                .findFirst();
 
         if (firstFailed.isPresent()) {
             // If any failed, force shutdown.

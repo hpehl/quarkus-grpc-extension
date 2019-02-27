@@ -22,7 +22,7 @@ public interface CleanupRegistry<T> {
      * Register item to clean-up at end of test.
      *
      * @param cleanupItem item to cleanup
-     * @param <R>         type of the item
+     * @param <R> type of the item
      *
      * @return the registered item
      */
