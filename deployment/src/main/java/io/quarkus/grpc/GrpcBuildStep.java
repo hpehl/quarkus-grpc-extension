@@ -25,8 +25,6 @@ import org.jboss.jandex.DotName;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanContainerBuildItem;
 import io.quarkus.arc.deployment.BeanDefiningAnnotationBuildItem;
-import io.quarkus.grpc.internal.GrpcConfig;
-import io.quarkus.grpc.internal.GrpcTemplate;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.Record;
@@ -39,6 +37,8 @@ import io.quarkus.deployment.builditem.substrate.SubstrateConfigBuildItem;
 import io.quarkus.grpc.GrpcInterceptor;
 import io.quarkus.grpc.GrpcProvider;
 import io.quarkus.grpc.GrpcService;
+import io.quarkus.grpc.internal.GrpcConfig;
+import io.quarkus.grpc.internal.GrpcTemplate;
 
 public class GrpcBuildStep {
 
