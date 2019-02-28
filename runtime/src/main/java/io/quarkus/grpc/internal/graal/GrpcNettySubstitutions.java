@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.quarkus.build.grpc.runtime.graal;
+package io.quarkus.grpc.internal.graal;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -1,7 +1,3 @@
 # Quarkus gRPC Extension
 
-Extension which starts a [gRPC](https://grpc.io/) server and registers gRPC services and interceptos:
-
-- Services have to be annotated with `io.quarkus.grpc.GrpcService`
-- Interceptors have to be annotated with `io.quarkus.grpc.GrpcInterceptor`
-
+Extension to write and deploy [gRPC](https://grpc.io/) services and interceptors. Use `@GrpcService` to annotate your services and `@GrpcInterceptor` to mark interceptors. During deployment all services and interceptors are picked up and registered aganst a gRPC server. 

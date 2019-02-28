@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.quarkus.build.grpc.deployment;
+package io.quarkus.grpc;
 
 import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
 import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
@@ -25,8 +25,8 @@ import org.jboss.jandex.DotName;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanContainerBuildItem;
 import io.quarkus.arc.deployment.BeanDefiningAnnotationBuildItem;
-import io.quarkus.build.grpc.runtime.GrpcConfig;
-import io.quarkus.build.grpc.runtime.GrpcTemplate;
+import io.quarkus.grpc.internal.GrpcConfig;
+import io.quarkus.grpc.internal.GrpcTemplate;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.Record;
