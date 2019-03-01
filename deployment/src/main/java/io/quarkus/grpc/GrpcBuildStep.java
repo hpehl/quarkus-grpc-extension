@@ -34,9 +34,6 @@ import io.quarkus.deployment.builditem.ServiceStartBuildItem;
 import io.quarkus.deployment.builditem.ShutdownContextBuildItem;
 import io.quarkus.deployment.builditem.substrate.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.substrate.SubstrateConfigBuildItem;
-import io.quarkus.grpc.GrpcInterceptor;
-import io.quarkus.grpc.GrpcProvider;
-import io.quarkus.grpc.GrpcService;
 import io.quarkus.grpc.internal.GrpcConfig;
 import io.quarkus.grpc.internal.GrpcTemplate;
 
@@ -62,19 +59,6 @@ public class GrpcBuildStep {
         // Setup reflections
         reflectiveClass.produce(new ReflectiveClassBuildItem(false, false,
                 "io.netty.channel.socket.nio.NioServerSocketChannel"));
-
-        // Configure Substrate
-        substrateConfig.produce(SubstrateConfigBuildItem.builder()
-                .addNativeImageSystemProperty("io.netty.noUnsafe", "true")
-                .addNativeImageSystemProperty("io.netty.leakDetection.level", "DISABLED")
-                .addRuntimeReinitializedClass("io.netty.handler.codec.http2.Http2CodecUtil")
-                .addRuntimeInitializedClass("io.netty.handler.codec.http.HttpObjectEncoder")
-                .addRuntimeInitializedClass("io.netty.handler.codec.http.websocketx.WebSocket00FrameEncoder")
-                .addRuntimeInitializedClass("io.netty.handler.codec.http2.DefaultHttp2FrameWriter")
-                .addRuntimeInitializedClass("io.netty.handler.ssl.JdkNpnApplicationProtocolNegotiator")
-                .addRuntimeInitializedClass("io.netty.handler.ssl.ReferenceCountedOpenSslEngine")
-                .addRuntimeInitializedClass("io.netty.handler.ssl.util.ThreadLocalInsecureRandom")
-                .build());
 
         // gRPC services and interceptors have to be @Dependent since gRPC services cannot be proxied
         // due to final methods in the generated gRPC service code
