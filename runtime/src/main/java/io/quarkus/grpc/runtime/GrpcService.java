@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.quarkus.grpc;
+package io.quarkus.grpc.runtime;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
@@ -27,12 +27,12 @@ import java.lang.annotation.Target;
 import javax.inject.Qualifier;
 
 /**
- * Annotation for gRPC interceptors.
+ * Annotation for gRPC services.
  *
  * @author Harald Pehl
  */
 @Qualifier
 @Retention(RUNTIME)
 @Target({ METHOD, FIELD, PARAMETER, TYPE })
-public @interface GrpcInterceptor {
+public @interface GrpcService {
 }

@@ -21,13 +21,14 @@
     <parent>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-build-parent</artifactId>
-        <version>1.0.0.Alpha1-SNAPSHOT</version>
+        <version>0.11.0</version>
     </parent>
 
-    <artifactId>quarkus-grpc</artifactId>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-grpc-parent</artifactId>
     <name>Quarkus - gRPC</name>
     <packaging>pom</packaging>
-    <version>1.0.0.Alpha1-SNAPSHOT</version>
+    <version>0.11.0</version>
 
     <licenses>
         <license>
@@ -43,9 +44,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <grpc.version>1.18.0</grpc.version>
+        <junit.version>5.4.0</junit.version>
         <protobuf.version>3.5.1</protobuf.version>
         <protoc.version>3.5.1-1</protoc.version>
-        <quarkus.version>1.0.0.Alpha1-SNAPSHOT</quarkus.version>
+        <quarkus.version>0.11.0</quarkus.version>
     </properties>
 
     <modules>
@@ -53,5 +55,4 @@
         <module>test</module>
         <module>runtime</module>
     </modules>
-
 </project>

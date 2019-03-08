@@ -20,8 +20,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-grpc</artifactId>
-        <version>1.0.0.Alpha1-SNAPSHOT</version>
+        <artifactId>quarkus-grpc-parent</artifactId>
+        <version>0.11.0</version>
     </parent>
 
     <artifactId>quarkus-grpc-test</artifactId>
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.4.0</version>
+            <version>${junit.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

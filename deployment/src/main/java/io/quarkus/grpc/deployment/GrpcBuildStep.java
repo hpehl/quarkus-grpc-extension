@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.quarkus.grpc;
+package io.quarkus.grpc.deployment;
 
 import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
 import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
@@ -34,8 +34,11 @@ import io.quarkus.deployment.builditem.ServiceStartBuildItem;
 import io.quarkus.deployment.builditem.ShutdownContextBuildItem;
 import io.quarkus.deployment.builditem.substrate.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.substrate.SubstrateConfigBuildItem;
-import io.quarkus.grpc.internal.GrpcConfig;
-import io.quarkus.grpc.internal.GrpcTemplate;
+import io.quarkus.grpc.runtime.GrpcConfig;
+import io.quarkus.grpc.runtime.GrpcInterceptor;
+import io.quarkus.grpc.runtime.GrpcProvider;
+import io.quarkus.grpc.runtime.GrpcService;
+import io.quarkus.grpc.runtime.GrpcTemplate;
 
 public class GrpcBuildStep {
 
