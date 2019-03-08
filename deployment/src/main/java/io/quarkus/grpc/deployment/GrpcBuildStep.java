@@ -15,12 +15,7 @@
  */
 package io.quarkus.grpc.deployment;
 
-import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
-import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
-
 import javax.enterprise.context.Dependent;
-
-import org.jboss.jandex.DotName;
 
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanContainerBuildItem;
@@ -33,13 +28,22 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.ServiceStartBuildItem;
 import io.quarkus.deployment.builditem.ShutdownContextBuildItem;
 import io.quarkus.deployment.builditem.substrate.ReflectiveClassBuildItem;
-import io.quarkus.deployment.builditem.substrate.SubstrateConfigBuildItem;
 import io.quarkus.grpc.runtime.GrpcConfig;
 import io.quarkus.grpc.runtime.GrpcInterceptor;
 import io.quarkus.grpc.runtime.GrpcProvider;
 import io.quarkus.grpc.runtime.GrpcService;
 import io.quarkus.grpc.runtime.GrpcTemplate;
+import org.jboss.jandex.DotName;
 
+import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
+import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
+
+/**
+ * Collects and registers all gRPC services and interceptors annotated with {@code @GrpcService} and
+ * {@code @GrpcInterceptor}. Starts a gRPC server listening on port {@code quarkus.grpc.port} (defaults to 8888).
+ *
+ * @author Harald Pehl
+ */
 public class GrpcBuildStep {
 
     private static final DotName GRPC_SERVICE = DotName.createSimple(GrpcService.class.getName());
@@ -51,7 +55,6 @@ public class GrpcBuildStep {
     @BuildStep
     public void build(BuildProducer<FeatureBuildItem> feature,
             BuildProducer<ReflectiveClassBuildItem> reflectiveClass,
-            BuildProducer<SubstrateConfigBuildItem> substrateConfig,
             BuildProducer<AdditionalBeanBuildItem> additionalBeans,
             BuildProducer<BeanDefiningAnnotationBuildItem> beanDefinitions,
             BuildProducer<ExtensionSslNativeSupportBuildItem> extensionSslNativeSupport) {
