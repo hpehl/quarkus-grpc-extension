@@ -15,7 +15,12 @@
  */
 package io.quarkus.grpc.deployment;
 
+import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
+import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
+
 import javax.enterprise.context.Dependent;
+
+import org.jboss.jandex.DotName;
 
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanContainerBuildItem;
@@ -33,10 +38,6 @@ import io.quarkus.grpc.runtime.GrpcInterceptor;
 import io.quarkus.grpc.runtime.GrpcProvider;
 import io.quarkus.grpc.runtime.GrpcService;
 import io.quarkus.grpc.runtime.GrpcTemplate;
-import org.jboss.jandex.DotName;
-
-import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
-import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
 
 /**
  * Collects and registers all gRPC services and interceptors annotated with {@code @GrpcService} and

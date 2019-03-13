@@ -52,7 +52,6 @@
 
     <modules>
         <module>deployment</module>
-        <module>test</module>
         <module>runtime</module>
     </modules>
 </project>
