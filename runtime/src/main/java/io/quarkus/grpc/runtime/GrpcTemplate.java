@@ -18,11 +18,14 @@ package io.quarkus.grpc.runtime;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+import javax.net.ssl.SSLContext;
+
 import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.ServerInterceptor;
 import io.quarkus.arc.runtime.BeanContainer;
+import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.ShutdownContext;
 import io.quarkus.runtime.annotations.Template;
 
@@ -37,11 +40,19 @@ public class GrpcTemplate {
     private static final Logger log = Logger.getLogger("io.quarkus.grpc");
     private static ServerBuilder<?> serverBuilder;
 
-    public void prepareServer(GrpcConfig config) {
-        serverBuilder = ServerBuilder.forPort(config.port)
-                .handshakeTimeout(config.handshakeTimeout, TimeUnit.MILLISECONDS)
-                .maxInboundMessageSize(config.maxInboundMessageSize)
-                .maxInboundMetadataSize(config.maxInboundMetadataSize);
+    public void prepareServer(GrpcConfig config, LaunchMode launchMode) throws Exception {
+        int port = config.determinePort(launchMode);
+        int sslPort = config.determineSslPort(launchMode);
+        SSLContext context = config.ssl.toSSLContext();
+
+        if (context != null) {
+            // NYI
+        } else {
+            serverBuilder = ServerBuilder.forPort(port)
+                    .handshakeTimeout(config.handshakeTimeout, TimeUnit.MILLISECONDS)
+                    .maxInboundMessageSize(config.maxInboundMessageSize)
+                    .maxInboundMetadataSize(config.maxInboundMetadataSize);
+        }
     }
 
     public void registerServices(BeanContainer beanContainer) {

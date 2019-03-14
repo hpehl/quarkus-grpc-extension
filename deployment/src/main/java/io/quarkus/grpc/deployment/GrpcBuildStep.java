@@ -15,12 +15,7 @@
  */
 package io.quarkus.grpc.deployment;
 
-import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
-import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
-
 import javax.enterprise.context.Dependent;
-
-import org.jboss.jandex.DotName;
 
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanContainerBuildItem;
@@ -30,6 +25,7 @@ import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
+import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.deployment.builditem.ServiceStartBuildItem;
 import io.quarkus.deployment.builditem.ShutdownContextBuildItem;
 import io.quarkus.deployment.builditem.substrate.ReflectiveClassBuildItem;
@@ -38,6 +34,10 @@ import io.quarkus.grpc.runtime.GrpcInterceptor;
 import io.quarkus.grpc.runtime.GrpcProvider;
 import io.quarkus.grpc.runtime.GrpcService;
 import io.quarkus.grpc.runtime.GrpcTemplate;
+import org.jboss.jandex.DotName;
+
+import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
+import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
 
 /**
  * Collects and registers all gRPC services and interceptors annotated with {@code @GrpcService} and
@@ -79,8 +79,8 @@ public class GrpcBuildStep {
 
     @BuildStep
     @Record(STATIC_INIT)
-    public void prepareServer(GrpcTemplate template) {
-        template.prepareServer(config);
+    public void prepareServer(GrpcTemplate template, LaunchModeBuildItem launchMode) throws Exception {
+        template.prepareServer(config, launchMode.getLaunchMode());
     }
 
     @BuildStep

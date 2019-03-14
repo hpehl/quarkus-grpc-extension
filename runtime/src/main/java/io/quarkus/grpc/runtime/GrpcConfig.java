@@ -15,38 +15,72 @@
  */
 package io.quarkus.grpc.runtime;
 
-import static io.quarkus.runtime.annotations.ConfigPhase.BUILD_AND_RUN_TIME_FIXED;
-
+import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.annotations.ConfigItem;
+import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.quarkus.runtime.configuration.ssl.ServerSslConfig;
 
 /**
  * gRPC configuration.
  *
  * @author Harald Pehl
  */
-@ConfigRoot(phase = BUILD_AND_RUN_TIME_FIXED)
+@ConfigRoot(phase = ConfigPhase.RUN_TIME)
 public final class GrpcConfig {
 
-    /** The port of the gRPC server. */
-    @ConfigItem(defaultValue = "8888")
-    int port;
+    /**
+     * The HTTP port
+     */
+    @ConfigItem(defaultValue = "5050")
+    public int port;
+
+    /**
+     * The HTTPS port
+     */
+    @ConfigItem(defaultValue = "5443")
+    public int sslPort;
+
+    /**
+     * The HTTP port used to run tests
+     */
+    @ConfigItem(defaultValue = "5051")
+    public int testPort;
+
+    /**
+     * The HTTPS port used to run tests
+     */
+    @ConfigItem(defaultValue = "5444")
+    public int testSslPort;
+
+    /**
+     * The SSL config
+     */
+    public ServerSslConfig ssl;
 
     /**
      * The permitted time (in ms) for new connections to complete negotiation handshakes before being killed.
      * If not set, defaults to 120000 (12s).
      */
     @ConfigItem(defaultValue = "120000")
-    int handshakeTimeout;
+    public int handshakeTimeout;
 
     /** The maximum message size allowed to be received on the server. If not set, defaults to 4 MiB. */
     @ConfigItem(defaultValue = "4194304")
-    int maxInboundMessageSize;
+    public int maxInboundMessageSize;
 
     /**
      * The maximum size of metadata allowed to be received. {@code Integer.MAX_VALUE} disables
      * the enforcement. If not set, defaults to 8 KiB.
      */
     @ConfigItem(defaultValue = "8192")
-    int maxInboundMetadataSize;
+    public int maxInboundMetadataSize;
+
+    public int determinePort(LaunchMode launchMode) {
+        return launchMode == LaunchMode.TEST ? testPort : port;
+    }
+
+    public int determineSslPort(LaunchMode launchMode) {
+        return launchMode == LaunchMode.TEST ? testSslPort : sslPort;
+    }
 }
