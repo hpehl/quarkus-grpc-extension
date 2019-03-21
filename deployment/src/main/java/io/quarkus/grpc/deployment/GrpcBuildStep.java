@@ -16,7 +16,6 @@
 package io.quarkus.grpc.deployment;
 
 import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
-import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
 
 import javax.enterprise.context.Dependent;
 
@@ -77,7 +76,9 @@ public class GrpcBuildStep {
     }
 
     @BuildStep
-    @Record(STATIC_INIT)
+    @Record(RUNTIME_INIT)
+    // runtime and not static init, because the grpc config uses io.quarkus.runtime.configuration.ssl.ServerSslConfig
+    // which requires a SSL protocol converter not available at static init time.
     public void prepareServer(GrpcTemplate template, LaunchModeBuildItem launchMode) throws Exception {
         template.prepareServer(config, launchMode.getLaunchMode());
     }
