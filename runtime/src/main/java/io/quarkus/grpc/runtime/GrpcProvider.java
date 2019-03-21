@@ -24,8 +24,6 @@ import io.grpc.ServerInterceptor;
 
 /**
  * Provides access to all gRPC services and interceptors as defined by {@code @GrpcService} and {@code @GrpcInterceptor}
- *
- * @author Harald Pehl
  */
 @ApplicationScoped
 public class GrpcProvider {

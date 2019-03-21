@@ -42,8 +42,6 @@ import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
 /**
  * Collects and registers all gRPC services and interceptors annotated with {@code @GrpcService} and
  * {@code @GrpcInterceptor}. Starts a gRPC server listening on port {@code quarkus.grpc.port} (defaults to 8888).
- *
- * @author Harald Pehl
  */
 public class GrpcBuildStep {
 

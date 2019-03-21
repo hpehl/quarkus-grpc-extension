@@ -29,11 +29,7 @@ import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.ShutdownContext;
 import io.quarkus.runtime.annotations.Template;
 
-/**
- * Setup a gRPC server, register services and interceptors and finally start the server.
- *
- * @author Harald Pehl
- */
+/** Setup a gRPC server, register services and interceptors and finally start the server. */
 @Template
 public class GrpcTemplate {
 

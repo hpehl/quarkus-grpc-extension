@@ -1,6 +1,6 @@
 # Quarkus gRPC Extension
 
-Extension to use [gRPC](https://grpc.io/) services and interceptors in your [Quarkus](https://quarkus.io) application. The extension picks up all services annotated with `@GrpcService` and interceptors marked with `@GrpcInterceptor`. The services and interceptors are registered against a gRPC server running on port `quarkus.grpc.port` (defaults to 8888).
+Extension to use [gRPC](https://grpc.io/) services and interceptors in your [Quarkus](https://quarkus.io) application. The extension picks up all services annotated with `@GrpcService` and interceptors marked with `@GrpcInterceptor`. The services and interceptors are registered against a gRPC server running on port `quarkus.grpc.port` (defaults to 5050).
 
 ## Getting Started
 
