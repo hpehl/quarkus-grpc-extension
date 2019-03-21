@@ -22,7 +22,7 @@ import io.quarkus.runtime.annotations.ConfigRoot;
 import io.quarkus.runtime.configuration.ssl.ServerSslConfig;
 
 /** gRPC configuration. */
-@ConfigRoot(phase = ConfigPhase.RUN_TIME)
+@ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
 public final class GrpcConfig {
 
     /** The HTTP port */
