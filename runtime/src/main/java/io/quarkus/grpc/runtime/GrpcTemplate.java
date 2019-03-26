@@ -42,6 +42,7 @@ public class GrpcTemplate {
         SSLContext context = config.ssl.toSSLContext();
 
         if (context != null) {
+            log.warning("SSL not yet implemented!");
             // NYI
         } else {
             serverBuilder = ServerBuilder.forPort(port)
