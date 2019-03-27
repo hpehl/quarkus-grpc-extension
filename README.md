@@ -133,7 +133,7 @@ mvn package -P native
 
 ## Quickstart
 
-If you want to see a more complex example, checkout the [gRPC quickstart](https://github.com/hpehl/quarkus-grpc-quickstart). It uses both the the [gRPC](https://github.com/hpehl/quarkus-grpc-extension) and the [gRPC client](https://github.com/hpehl/quarkus-grpc-client-extension) extension to implement the [route guide example](https://github.com/grpc/grpc-java/tree/v1.18.0/examples#grpc-examples) provided by [gRPC Java](https://github.com/grpc/grpc-java). 
+If you want to see a more complex example, checkout the [gRPC quickstart](https://github.com/hpehl/quarkus-grpc-quickstart). It uses both the [gRPC](https://github.com/hpehl/quarkus-grpc-extension) and the [gRPC client](https://github.com/hpehl/quarkus-grpc-client-extension) extension to implement the [route guide example](https://github.com/grpc/grpc-java/tree/v1.18.0/examples#grpc-examples) provided by [gRPC Java](https://github.com/grpc/grpc-java). 
 
 ## What's Missing
 
