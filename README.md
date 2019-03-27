@@ -27,7 +27,7 @@ Add the following dependency to your `pom.xml`:
 </dependency>
 ```
 
-You can remove the `quarkus-arc` and `quarkus-resteasy` dependencies from the generated `pom.xml` since they are not used for this demo.
+You can remove the `quarkus-arc` and `quarkus-resteasy` dependencies from the generated `pom.xml` since they are not used in this demo.
 
 ### Setup gRPC
 
@@ -67,7 +67,7 @@ To setup the gRPC code generation, add the following settings to your `pom.xml`:
 </build>
 ```
 
-### Define Service
+### Define gRPC Service
 
 Create a service definition in `src/main/proto/helloworld.proto`
 
@@ -95,7 +95,7 @@ message HelloReply {
 
 ### Implement Service
 
-Write a service implementation in `src/main/java/io/grpc/helloworld/GreeterService.java`:
+Write a service implementation in `src/main/java/io/grpc/helloworld/GreeterService.java` (you might want to execute `mvn compile` first to generate the gRPC code):
 
 ```java
 package io.grpc.helloworld;
@@ -133,12 +133,12 @@ mvn package -P native
 
 ## Quickstart
 
-If you want to see a more complex example, the [gRPC quickstart](https://github.com/hpehl/quarkus-grpc-quickstart) shows how to use the [Quarkus gRPC](https://github.com/hpehl/quarkus-grpc-extension) and the [Quarkus gRPC client](https://github.com/hpehl/quarkus-grpc-client-extension) extension to implement the [route guide example](https://github.com/grpc/grpc-java/tree/v1.18.0/examples#grpc-examples) provided by [gRPC Java](https://github.com/grpc/grpc-java). 
+If you want to see a more complex example, checkout the [gRPC quickstart](https://github.com/hpehl/quarkus-grpc-quickstart). It uses both the the [gRPC](https://github.com/hpehl/quarkus-grpc-extension) and the [gRPC client](https://github.com/hpehl/quarkus-grpc-client-extension) extension to implement the [route guide example](https://github.com/grpc/grpc-java/tree/v1.18.0/examples#grpc-examples) provided by [gRPC Java](https://github.com/grpc/grpc-java). 
 
 ## What's Missing
 
 - TLS
-- Devmode support
+- Better devmode support
 - More configuration options
 
 See also https://github.com/quarkusio/quarkus/issues/820
