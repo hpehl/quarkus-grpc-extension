@@ -24,29 +24,25 @@
         <version>0.12.0</version>
     </parent>
 
-    <artifactId>quarkus-grpc</artifactId>
+    <artifactId>quarkus-grpc-deployment</artifactId>
     <name>Quarkus - gRPC - Deployment</name>
 
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-arc</artifactId>
-            <version>${quarkus.version}</version>
+            <artifactId>quarkus-core-deployment</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-core</artifactId>
-            <version>${quarkus.version}</version>
+            <artifactId>quarkus-arc-deployment</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-netty</artifactId>
-            <version>${quarkus.version}</version>
+            <artifactId>quarkus-netty-deployment</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-grpc-runtime</artifactId>
-            <version>${project.version}</version>
+            <artifactId>quarkus-grpc</artifactId>
         </dependency>
     </dependencies>
 

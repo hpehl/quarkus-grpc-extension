@@ -36,15 +36,5 @@ final class Target_io_grpc_netty_ProtocolNegotiators {
     }
 }
 
-@TargetClass(className = "com.google.protobuf.UnsafeUtil")
-final class Target_com_google_protobuf_UnsafeUtil {
-
-    @Substitute
-    private static sun.misc.Unsafe getUnsafe() {
-        // since we configured Netty with io.netty.noUnsafe=true, this should be safe
-        return null;
-    }
-}
-
 class GrpcNettySubstitutions {
 }

@@ -67,7 +67,7 @@ public class GrpcBuildStep {
 
         // gRPC services and interceptors have to be @Dependent since gRPC services cannot be proxied
         // due to final methods in the generated gRPC service code
-        additionalBeans.produce(new AdditionalBeanBuildItem(false, GrpcProvider.class));
+        additionalBeans.produce(new AdditionalBeanBuildItem(GrpcProvider.class));
         beanDefinitions.produce(new BeanDefiningAnnotationBuildItem(GRPC_SERVICE, DEPENDENT, false));
         beanDefinitions.produce(new BeanDefiningAnnotationBuildItem(GRPC_INTERCEPTOR, DEPENDENT, false));
 
