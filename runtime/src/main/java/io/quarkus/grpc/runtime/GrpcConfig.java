@@ -15,14 +15,15 @@
  */
 package io.quarkus.grpc.runtime;
 
+import static io.quarkus.runtime.annotations.ConfigPhase.RUN_TIME;
+
 import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.annotations.ConfigItem;
-import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.quarkus.runtime.configuration.ssl.ServerSslConfig;
 
 /** gRPC configuration. */
-@ConfigRoot(phase = ConfigPhase.RUN_TIME)
+@ConfigRoot(phase = RUN_TIME)
 public final class GrpcConfig {
 
     /** The port */

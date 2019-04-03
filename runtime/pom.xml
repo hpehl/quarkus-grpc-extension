@@ -95,8 +95,8 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>io.quarkus.bootstrap</groupId>
-                <artifactId>bootstrap-maven-plugin</artifactId>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bootstrap-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
