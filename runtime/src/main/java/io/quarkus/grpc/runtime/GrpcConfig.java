@@ -25,19 +25,19 @@ import io.quarkus.runtime.configuration.ssl.ServerSslConfig;
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)
 public final class GrpcConfig {
 
-    /** The HTTP port */
+    /** The port */
     @ConfigItem(defaultValue = "5050")
     public int port;
 
-    /** The HTTPS port */
+    /** The secure port */
     @ConfigItem(defaultValue = "5443")
     public int sslPort;
 
-    /** The HTTP port used to run tests */
+    /** The port used to run tests */
     @ConfigItem(defaultValue = "5051")
     public int testPort;
 
-    /** The HTTPS port used to run tests */
+    /** The secure port used to run tests */
     @ConfigItem(defaultValue = "5444")
     public int testSslPort;
 

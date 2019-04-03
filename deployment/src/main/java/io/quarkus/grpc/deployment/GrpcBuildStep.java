@@ -18,6 +18,7 @@ package io.quarkus.grpc.deployment;
 import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
 
 import javax.enterprise.context.Dependent;
+import javax.inject.Singleton;
 
 import org.jboss.jandex.DotName;
 
@@ -33,10 +34,10 @@ import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.deployment.builditem.ServiceStartBuildItem;
 import io.quarkus.deployment.builditem.ShutdownContextBuildItem;
 import io.quarkus.deployment.builditem.substrate.ReflectiveClassBuildItem;
+import io.quarkus.grpc.GrpcInterceptor;
+import io.quarkus.grpc.GrpcService;
 import io.quarkus.grpc.runtime.GrpcConfig;
-import io.quarkus.grpc.runtime.GrpcInterceptor;
 import io.quarkus.grpc.runtime.GrpcProvider;
-import io.quarkus.grpc.runtime.GrpcService;
 import io.quarkus.grpc.runtime.GrpcTemplate;
 
 /**
@@ -48,8 +49,7 @@ public class GrpcBuildStep {
     private static final DotName GRPC_SERVICE = DotName.createSimple(GrpcService.class.getName());
     private static final DotName GRPC_INTERCEPTOR = DotName.createSimple(GrpcInterceptor.class.getName());
     private static final DotName DEPENDENT = DotName.createSimple(Dependent.class.getName());
-
-    GrpcConfig config;
+    private static final DotName SINGLETON = DotName.createSimple(Singleton.class.getName());
 
     @BuildStep
     public void build(BuildProducer<FeatureBuildItem> feature,
@@ -61,13 +61,13 @@ public class GrpcBuildStep {
         // Register gRPC feature
         feature.produce(new FeatureBuildItem("grpc"));
 
-        // Setup reflections
-        reflectiveClass.produce(new ReflectiveClassBuildItem(false, false,
-                "io.netty.channel.socket.nio.NioServerSocketChannel"));
-
+        additionalBeans.produce(AdditionalBeanBuildItem.builder()
+                .addBeanClass(GrpcProvider.class)
+                .setDefaultScope(SINGLETON)
+                .setUnremovable()
+                .build());
         // gRPC services and interceptors have to be @Dependent since gRPC services cannot be proxied
         // due to final methods in the generated gRPC service code
-        additionalBeans.produce(new AdditionalBeanBuildItem(GrpcProvider.class));
         beanDefinitions.produce(new BeanDefiningAnnotationBuildItem(GRPC_SERVICE, DEPENDENT, false));
         beanDefinitions.produce(new BeanDefiningAnnotationBuildItem(GRPC_INTERCEPTOR, DEPENDENT, false));
 
@@ -79,7 +79,8 @@ public class GrpcBuildStep {
     @Record(RUNTIME_INIT)
     // runtime and not static init, because the grpc config uses io.quarkus.runtime.configuration.ssl.ServerSslConfig
     // which requires a SSL protocol converter not available at static init time.
-    public void prepareServer(GrpcTemplate template, LaunchModeBuildItem launchMode) throws Exception {
+    public void prepareServer(GrpcTemplate template, GrpcConfig config, LaunchModeBuildItem launchMode)
+            throws Exception {
         template.prepareServer(config, launchMode.getLaunchMode());
     }
 

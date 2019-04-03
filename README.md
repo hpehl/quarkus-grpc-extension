@@ -101,7 +101,7 @@ Write a service implementation in `src/main/java/io/grpc/helloworld/GreeterServi
 package io.grpc.helloworld;
 
 import io.grpc.stub.StreamObserver;
-import io.quarkus.grpc.runtime.GrpcService;
+import io.quarkus.grpc.GrpcService;
 
 @GrpcService
 public class GreeterService extends GreeterGrpc.GreeterImplBase {
