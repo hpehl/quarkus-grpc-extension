@@ -51,7 +51,7 @@ public class GrpcBuildStep {
     private static final DotName DEPENDENT = DotName.createSimple(Dependent.class.getName());
     private static final DotName SINGLETON = DotName.createSimple(Singleton.class.getName());
 
-    @BuildStep
+    @BuildStep(providesCapabilities = "io.quarkus.grpc")
     public void build(BuildProducer<FeatureBuildItem> feature,
             BuildProducer<ReflectiveClassBuildItem> reflectiveClass,
             BuildProducer<AdditionalBeanBuildItem> additionalBeans,
