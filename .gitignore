@@ -8,6 +8,10 @@
 *.tar.gz
 *.war
 *.zip
+.classpath
+.factorypath
 .idea
+.project
+.settings
 hs_err_pid*
 target
