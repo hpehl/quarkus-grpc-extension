@@ -17,7 +17,6 @@ package io.quarkus.grpc.runtime;
 
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.grpc.BindableService;
 import io.grpc.ServerInterceptor;
@@ -27,7 +26,6 @@ import io.quarkus.grpc.GrpcService;
 /**
  * Provides access to all gRPC services and interceptors as defined by {@code @GrpcService} and {@code @GrpcInterceptor}
  */
-@Singleton
 public class GrpcProvider {
 
     @Inject
