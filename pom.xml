@@ -62,6 +62,13 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-bom</artifactId>
+                <version>${grpc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-bom</artifactId>
                 <version>${protobuf.version}</version>
