@@ -45,8 +45,7 @@
 
         <grpc.version>1.20.0</grpc.version>
         <junit.version>5.4.0</junit.version>
-        <protobuf.version>3.7.1</protobuf.version>
-        <protoc.version>3.7.1</protoc.version>
+        <protobuf.version>3.8.0-rc-1</protobuf.version>
         <quarkus.version>999-SNAPSHOT</quarkus.version>
     </properties>
 
@@ -61,6 +60,13 @@
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-grpc</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-bom</artifactId>
+                <version>${protobuf.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
