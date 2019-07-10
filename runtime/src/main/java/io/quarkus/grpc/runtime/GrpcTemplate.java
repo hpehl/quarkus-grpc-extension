@@ -16,7 +16,6 @@
 package io.quarkus.grpc.runtime;
 
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 import javax.net.ssl.SSLContext;
 
@@ -28,6 +27,7 @@ import io.quarkus.arc.runtime.BeanContainer;
 import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.ShutdownContext;
 import io.quarkus.runtime.annotations.Template;
+import org.jboss.logging.Logger;
 
 /** Setup a gRPC server, register services and interceptors and finally start the server. */
 @Template
@@ -42,7 +42,7 @@ public class GrpcTemplate {
         SSLContext context = config.ssl.toSSLContext();
 
         if (context != null) {
-            log.warning("SSL not yet implemented!");
+            log.warn("SSL not yet implemented!");
             // NYI
         } else {
             serverBuilder = ServerBuilder.forPort(port)
@@ -56,7 +56,7 @@ public class GrpcTemplate {
         GrpcProvider provider = beanContainer.instance(GrpcProvider.class);
         for (BindableService service : provider.getServices()) {
             serverBuilder.addService(service);
-            log.info("Registered gRPC service " + service.getClass().getName());
+            log.infof("Registered gRPC service %s", service.getClass().getName());
         }
     }
 
@@ -64,13 +64,13 @@ public class GrpcTemplate {
         GrpcProvider provider = beanContainer.instance(GrpcProvider.class);
         for (ServerInterceptor interceptor : provider.getInterceptors()) {
             serverBuilder.intercept(interceptor);
-            log.info("Registered gRPC interceptor " + interceptor.getClass().getName());
+            log.infof("Registered gRPC interceptor %s", interceptor.getClass().getName());
         }
     }
 
     public void startServer(ShutdownContext shutdown) throws Exception {
         Server server = serverBuilder.build().start();
-        log.info("gRPC server listening on port " + server.getPort());
+        log.infof("gRPC server listening on port %d", server.getPort());
         shutdown.addShutdownTask(server::shutdown);
     }
 }
