@@ -19,6 +19,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
 
+import org.jboss.logging.Logger;
+
 import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -26,12 +28,11 @@ import io.grpc.ServerInterceptor;
 import io.quarkus.arc.runtime.BeanContainer;
 import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.ShutdownContext;
-import io.quarkus.runtime.annotations.Template;
-import org.jboss.logging.Logger;
+import io.quarkus.runtime.annotations.Recorder;
 
 /** Setup a gRPC server, register services and interceptors and finally start the server. */
-@Template
-public class GrpcTemplate {
+@Recorder
+public class GrpcRecorder {
 
     private static final Logger log = Logger.getLogger("io.quarkus.grpc");
     private static ServerBuilder<?> serverBuilder;

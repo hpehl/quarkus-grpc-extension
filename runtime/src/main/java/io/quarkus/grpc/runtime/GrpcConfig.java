@@ -23,6 +23,7 @@ import io.quarkus.runtime.annotations.ConfigRoot;
 import io.quarkus.runtime.configuration.ssl.ServerSslConfig;
 
 /** gRPC configuration. */
+@SuppressWarnings("WeakerAccess")
 @ConfigRoot(phase = RUN_TIME)
 public final class GrpcConfig {
 

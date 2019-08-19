@@ -24,6 +24,7 @@ import javax.inject.Singleton;
 
 import org.jboss.jandex.ClassInfo;
 import org.jboss.jandex.DotName;
+import org.jboss.logging.Logger;
 
 import com.google.protobuf.GeneratedMessageV3;
 
@@ -44,8 +45,7 @@ import io.quarkus.grpc.GrpcInterceptor;
 import io.quarkus.grpc.GrpcService;
 import io.quarkus.grpc.runtime.GrpcConfig;
 import io.quarkus.grpc.runtime.GrpcProvider;
-import io.quarkus.grpc.runtime.GrpcTemplate;
-import org.jboss.logging.Logger;
+import io.quarkus.grpc.runtime.GrpcRecorder;
 
 /**
  * Collects and registers all gRPC services and interceptors annotated with {@code @GrpcService} and
@@ -103,18 +103,18 @@ public class GrpcBuildStep {
     @Record(RUNTIME_INIT)
     // runtime and not static init, because the grpc config uses io.quarkus.runtime.configuration.ssl.ServerSslConfig
     // which requires a SSL protocol converter not available at static init time.
-    public void prepareServer(GrpcTemplate template, GrpcConfig config, LaunchModeBuildItem launchMode)
+    public void prepareServer(GrpcRecorder recorder, GrpcConfig config, LaunchModeBuildItem launchMode)
             throws Exception {
-        template.prepareServer(config, launchMode.getLaunchMode());
+        recorder.prepareServer(config, launchMode.getLaunchMode());
     }
 
     @BuildStep
     @Record(RUNTIME_INIT)
-    public ServiceStartBuildItem startServer(GrpcTemplate template, BeanContainerBuildItem beanContainer,
+    public ServiceStartBuildItem startServer(GrpcRecorder recorder, BeanContainerBuildItem beanContainer,
             ShutdownContextBuildItem shutdown) throws Exception {
-        template.registerServices(beanContainer.getValue());
-        template.registerInterceptors(beanContainer.getValue());
-        template.startServer(shutdown);
+        recorder.registerServices(beanContainer.getValue());
+        recorder.registerInterceptors(beanContainer.getValue());
+        recorder.startServer(shutdown);
         return new ServiceStartBuildItem("gRPC");
     }
 }

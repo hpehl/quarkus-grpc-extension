@@ -26,6 +26,7 @@ import io.quarkus.grpc.GrpcService;
 /**
  * Provides access to all gRPC services and interceptors as defined by {@code @GrpcService} and {@code @GrpcInterceptor}
  */
+@SuppressWarnings("WeakerAccess")
 public class GrpcProvider {
 
     @Inject
