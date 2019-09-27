@@ -17,10 +17,11 @@ package io.quarkus.grpc.runtime;
 
 import static io.quarkus.runtime.annotations.ConfigPhase.RUN_TIME;
 
+import javax.net.ssl.SSLContext;
+
 import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigRoot;
-import io.quarkus.runtime.configuration.ssl.ServerSslConfig;
 
 /** gRPC configuration. */
 @SuppressWarnings("WeakerAccess")
@@ -42,9 +43,6 @@ public final class GrpcConfig {
     /** The secure port used to run tests */
     @ConfigItem(defaultValue = "5444")
     public int testSslPort;
-
-    /** The SSL config */
-    public ServerSslConfig ssl;
 
     /**
      * The permitted time (in ms) for new connections to complete negotiation handshakes before being killed.
@@ -70,5 +68,10 @@ public final class GrpcConfig {
 
     public int determineSslPort(LaunchMode launchMode) {
         return launchMode == LaunchMode.TEST ? testSslPort : sslPort;
+    }
+
+    public SSLContext sslContext() {
+        // not implemented
+        return null;
     }
 }
