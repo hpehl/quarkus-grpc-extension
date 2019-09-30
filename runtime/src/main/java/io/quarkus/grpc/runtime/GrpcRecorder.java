@@ -40,7 +40,7 @@ public class GrpcRecorder {
     public void prepareServer(GrpcConfig config, LaunchMode launchMode) throws Exception {
         int port = config.determinePort(launchMode);
         int sslPort = config.determineSslPort(launchMode);
-        SSLContext context = config.ssl.toSSLContext();
+        SSLContext context = config.sslContext();
 
         if (context != null) {
             log.warn("SSL not yet implemented!");
