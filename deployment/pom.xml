@@ -21,7 +21,7 @@
     <parent>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-grpc-parent</artifactId>
-        <version>0.21.1</version>
+        <version>1.0.0.CR1</version>
     </parent>
 
     <artifactId>quarkus-grpc-deployment</artifactId>
@@ -43,6 +43,12 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-grpc</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.errorprone</groupId>
+                    <artifactId>error_prone_annotations</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

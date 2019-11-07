@@ -17,8 +17,6 @@ package io.quarkus.grpc.runtime;
 
 import java.util.concurrent.TimeUnit;
 
-import javax.net.ssl.SSLContext;
-
 import org.jboss.logging.Logger;
 
 import io.grpc.BindableService;
@@ -37,20 +35,13 @@ public class GrpcRecorder {
     private static final Logger log = Logger.getLogger("io.quarkus.grpc");
     private static ServerBuilder<?> serverBuilder;
 
-    public void prepareServer(GrpcConfig config, LaunchMode launchMode) throws Exception {
+    public void prepareServer(GrpcConfig config, LaunchMode launchMode) {
         int port = config.determinePort(launchMode);
-        int sslPort = config.determineSslPort(launchMode);
-        SSLContext context = config.ssl.toSSLContext();
 
-        if (context != null) {
-            log.warn("SSL not yet implemented!");
-            // NYI
-        } else {
-            serverBuilder = ServerBuilder.forPort(port)
-                    .handshakeTimeout(config.handshakeTimeout, TimeUnit.MILLISECONDS)
-                    .maxInboundMessageSize(config.maxInboundMessageSize)
-                    .maxInboundMetadataSize(config.maxInboundMetadataSize);
-        }
+        serverBuilder = ServerBuilder.forPort(port)
+                .handshakeTimeout(config.handshakeTimeout, TimeUnit.MILLISECONDS)
+                .maxInboundMessageSize(config.maxInboundMessageSize)
+                .maxInboundMetadataSize(config.maxInboundMetadataSize);
     }
 
     public void registerServices(BeanContainer beanContainer) {

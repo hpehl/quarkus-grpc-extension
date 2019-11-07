@@ -40,7 +40,7 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.deployment.builditem.ServiceStartBuildItem;
 import io.quarkus.deployment.builditem.ShutdownContextBuildItem;
-import io.quarkus.deployment.builditem.substrate.ReflectiveClassBuildItem;
+import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.grpc.GrpcInterceptor;
 import io.quarkus.grpc.GrpcService;
 import io.quarkus.grpc.runtime.GrpcConfig;
@@ -103,8 +103,7 @@ public class GrpcBuildStep {
     @Record(RUNTIME_INIT)
     // runtime and not static init, because the grpc config uses io.quarkus.runtime.configuration.ssl.ServerSslConfig
     // which requires a SSL protocol converter not available at static init time.
-    public void prepareServer(GrpcRecorder recorder, GrpcConfig config, LaunchModeBuildItem launchMode)
-            throws Exception {
+    public void prepareServer(GrpcRecorder recorder, GrpcConfig config, LaunchModeBuildItem launchMode) {
         recorder.prepareServer(config, launchMode.getLaunchMode());
     }
 
