@@ -17,6 +17,8 @@ package io.quarkus.grpc.runtime;
 
 import static io.quarkus.runtime.annotations.ConfigPhase.RUN_TIME;
 
+import javax.net.ssl.SSLContext;
+
 import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigRoot;
@@ -66,5 +68,10 @@ public final class GrpcConfig {
 
     public int determineSslPort(LaunchMode launchMode) {
         return launchMode == LaunchMode.TEST ? testSslPort : sslPort;
+    }
+
+    public SSLContext sslContext() {
+        // not implemented
+        return null;
     }
 }
