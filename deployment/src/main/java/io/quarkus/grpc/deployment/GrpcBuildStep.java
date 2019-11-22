@@ -86,8 +86,6 @@ public class GrpcBuildStep {
 
     @BuildStep
     @Record(RUNTIME_INIT)
-    // runtime and not static init, because the grpc config uses io.quarkus.runtime.configuration.ssl.ServerSslConfig
-    // which requires a SSL protocol converter not available at static init time.
     public void prepareServer(GrpcRecorder recorder, GrpcConfig config, LaunchModeBuildItem launchMode) {
         recorder.prepareServer(config, launchMode.getLaunchMode());
     }
