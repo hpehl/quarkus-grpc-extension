@@ -6,14 +6,14 @@
     <parent>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-build-parent</artifactId>
-        <version>1.0.0.CR2</version>
+        <version>1.0.1.Final</version>
     </parent>
 
     <groupId>io.quarkus</groupId>
     <artifactId>quarkus-grpc-parent</artifactId>
     <name>Quarkus - gRPC</name>
     <packaging>pom</packaging>
-    <version>1.0.0.CR2</version>
+    <version>1.0.1.Final</version>
 
     <licenses>
         <license>
@@ -28,9 +28,9 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <grpc.version>1.22.0</grpc.version>
-        <protobuf.version>3.9.0-rc-1</protobuf.version>
-        <quarkus.version>1.0.0.CR2</quarkus.version>
+        <grpc.version>1.24.0</grpc.version>
+        <protobuf.version>3.11.1</protobuf.version>
+        <quarkus.version>1.0.1.Final</quarkus.version>
     </properties>
 
     <modules>
