@@ -1,3 +1,9 @@
+:warning: **No longer supported**
+
+This extension is no longer supported. Please use the official gRPC extension which is expected to be released as part of Quarkus 1.5.0.Final: https://github.com/quarkusio/quarkus/tree/master/extensions/grpc
+
+---
+
 # Quarkus gRPC Extension
 
 Extension to use [gRPC](https://grpc.io/) services and interceptors in your [Quarkus](https://quarkus.io) application. The extension picks up all services annotated with `@GrpcService` and interceptors marked with `@GrpcInterceptor`. The services and interceptors are registered against a gRPC server running on port `quarkus.grpc.port` (defaults to 5050).
@@ -14,7 +20,7 @@ Create a new project using the Quarkus [archetype](https://quarkus.io/guides/get
 mvn io.quarkus:quarkus-maven-plugin:0.11.0:create \
     -DprojectGroupId=io.grpc.helloworld \
     -DprojectArtifactId=helloworld
-``` 
+```
 
 Add the following dependency to your `pom.xml`:
 
